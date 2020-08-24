@@ -1,0 +1,228 @@
+{
+    "AUTO GENERATED": "DO NOT EDIT",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "RceRegistration",
+    "description": "Message: RceRegistration, Def: custom_endpoint_registration_def.gen",
+    "type": "object",
+    "properties": {
+        "name": {
+            "description": "Short Name for the endpoint type (convention: no spaces)",
+            "type": "string"
+        },
+        "title": {
+            "description": "Display Name for the endpoint type (shown in the Endpoint Type dropdown in the GUI)",
+            "type": "string"
+        },
+        "server": {
+            "description": "For internal use only",
+            "type": "string"
+        },
+        "features": {
+            "description": "Supported features by the endpoint type implmentation",
+            "type": "object",
+            "properties": {
+                "has_source_unload": {
+                    "description": "Supports Full-Load as a source endpoint",
+                    "type": "boolean"
+                },
+                "has_source_cdc": {
+                    "description": "Supports CDC as a source endpoint",
+                    "type": "boolean"
+                },
+                "has_target_load": {
+                    "description": "Supports Full-Load as a target endpoint",
+                    "type": "boolean"
+                },
+                "has_target_cdc": {
+                    "description": "Supports CDC as a target endpoint",
+                    "type": "boolean"
+                },
+                "supplemental_columns_in_updates": {
+                    "description": "Columns provided by the endpoint for UPDATE operation",
+                    "type": "string",
+                    "enum": [
+                        "ALL",
+                        "DYNAMIC",
+                        "CHANGED_ONLY"
+                    ]
+                }
+            }
+        },
+        "connection_info": {
+            "description": "Connection properties required from the endpoint user in the GUI",
+            "type": "object",
+            "properties": {
+                "groups": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "name": {
+                                "description": "Group Name (used as a reference on the items 'group' field)",
+                                "type": "string"
+                            },
+                            "description": {
+                                "description": "Description - explanation of the group meaning",
+                                "type": "string"
+                            },
+                            "ui_name": {
+                                "description": "Display Name of the group in the GUI",
+                                "type": "string"
+                            },
+                            "visible_exp": {
+                                "description": "Boolean expression - if true the group will be visible (default: true, syntax: Javascript)",
+                                "type": "string"
+                            }
+                        }
+                    }
+                },
+                "items": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "name": {
+                                "description": "Name (should not be changed to maintain backward compatibility)",
+                                "required": true,
+                                "type": "string"
+                            },
+                            "type": {
+                                "description": "Type (STRING, NUMBER, ENUM or BOOL - if ENUM is selected the 'values' field is expected)",
+                                "required": true,
+                                "type": "string",
+                                "enum": [
+                                    "STRING",
+                                    "NUMBER",
+                                    "ENUM",
+                                    "BOOL",
+                                    "BINARY"
+                                ]
+                            },
+                            "level": {
+                                "description": "Tab where item will be displayed in the GUI (General, Advanced or Internal Parameters dialog, default: General)",
+                                "type": "string",
+                                "enum": [
+                                    "GENERAL",
+                                    "ADVANCED",
+                                    "INTERNAL"
+                                ]
+                            },
+                            "min_value": {
+                                "description": "Minimum value for NUMBER item",
+                                "type": "integer"
+                            },
+                            "max_value": {
+                                "description": "Maximum value for NUMBER item",
+                                "type": "integer"
+                            },
+                            "max_length": {
+                                "description": "Maximum length for STRING item",
+                                "type": "integer"
+                            },
+                            "ui_name": {
+                                "description": "Display name of the item (can be changed without breaking backward compatibility)",
+                                "type": "string"
+                            },
+                            "required": {
+                                "description": "Whether the the field is required or not (default: false)",
+                                "type": "boolean"
+                            },
+                            "values": {
+                                "description": "ENUM values (relevant for ENUM type only)",
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "name": {
+                                            "required": true,
+                                            "type": "string"
+                                        },
+                                        "value": {
+                                            "required": true,
+                                            "type": "integer"
+                                        },
+                                        "ui_name": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            },
+                            "default_value": {
+                                "description": "Default value",
+                                "type": "string"
+                            },
+                            "encrypted_using": {
+                                "description": "Define the item as an encrypted field (value should be the name of another item in the object)",
+                                "type": "string"
+                            },
+                            "group": {
+                                "description": "Group where item will be displayed in the GUI (value should be one of the group names defined in 'groups')",
+                                "type": "string"
+                            },
+                            "disabled_exp": {
+                                "description": "Boolean expression - if true the item will be disabled (default: false, syntax: Javascript)",
+                                "type": "string"
+                            },
+                            "visible_exp": {
+                                "description": "Boolean expression - if true the item will be visible (default: true, syntax: Javascript)",
+                                "type": "string"
+                            },
+                            "browse": {
+                                "description": "Enable 'browse' button for the item in the GUI. (options are 'LIST' for list of strings or 'FILE_SYSTEM' for folders/files structure)",
+                                "type": "string",
+                                "enum": [
+                                    "NONE",
+                                    "LIST",
+                                    "FILE_SYSTEM"
+                                ]
+                            },
+                            "info": {
+                                "description": "Informational text (useful for explanations about the item)",
+                                "type": "string"
+                            },
+                            "role": {
+                                "description": "Role of SOURCE, TARGET or BOTH (default: BOTH)",
+                                "type": "string",
+                                "enum": [
+                                    "BOTH",
+                                    "SOURCE",
+                                    "TARGET"
+                                ]
+                            },
+                            "unit": {
+                                "description": "Item Unit (for NUMBERs) - e.g. Sec, KB, GB, km, USD, $",
+                                "type": "string"
+                            },
+                            "placeholder": {
+                                "description": "UI placeholder for for STRING items",
+                                "type": "string"
+                            },
+                            "display_order": {
+                                "description": "UI display order",
+                                "type": "integer"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "class_package": {
+            "description": "The Java package of the endpoint implementation",
+            "type": "string"
+        },
+        "kind": {
+            "description": "Display icon for the endpoint type in the GUI (default: DATABASE)",
+            "type": "string",
+            "enum": [
+                "DATABASE",
+                "FILE",
+                "DATA_WAREHOUSE",
+                "NOSQL",
+                "CLOUD",
+                "HADOOP",
+                "STREAM",
+                "APPLICATION"
+            ]
+        }
+    }
+}
